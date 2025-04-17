@@ -1,4 +1,5 @@
 import tkinter as tk
+import math
 
 # Funktion für das Rechnen
 
@@ -20,36 +21,64 @@ def rechne():
                 ergebnis = zahl1 / zahl2
             else:
                 ergebnis = "Fehler: Division durch 0"
+        elif operator == "^":
+            ergebnis = zahl1 ** zahl2
+        elif operator == "√":
+            if zahl1 >= 0:
+                ergebnis = math.sqrt(zahl1)
+            else:
+                ergebnis = "Fehler: Negative Zahl"
         else:
             ergebnis = "Ungültiger Operator"
 
         label_ergebnis.config(text=f"Ergebnis: {ergebnis}")
+
     except ValueError:
         label_ergebnis.config(text="Bitte gültige Zahlen eingeben!")
 
+# ⬇ Vorzeichen der ersten Zahl wechseln
 
-# Fenster erstellen
+
+def wechsle_vorzeichen():
+    try:
+        wert = float(entry1.get())
+        entry1.delete(0, tk.END)
+        entry1.insert(0, str(-wert))
+    except ValueError:
+        pass
+
+
+# Hauptfenster
 root = tk.Tk()
 root.title("Einfacher Taschenrechner")
+root.configure(bg="#f0f0f0")
 
 # Eingabefelder
-entry1 = tk.Entry(root)
-entry1.grid(row=0, column=0)
-entry2 = tk.Entry(root)
-entry2.grid(row=0, column=2)
+entry1 = tk.Entry(root, font=("Arial", 14))
+entry1.grid(row=0, column=0, padx=5, pady=10)
 
-# Dropdown für Operator
+entry2 = tk.Entry(root, font=("Arial", 14))
+entry2.grid(row=0, column=2, padx=5, pady=10)
+
+# Operator-Dropdown
 operator_var = tk.StringVar(value="+")
-operator_menu = tk.OptionMenu(root, operator_var, "+", "-", "*", "/")
+operator_menu = tk.OptionMenu(root, operator_var, "+", "-", "*", "/", "^", "√")
+operator_menu.config(font=("Arial", 12))
 operator_menu.grid(row=0, column=1)
 
-# Button für Berechnung
-button = tk.Button(root, text="Berechnen", command=rechne)
-button.grid(row=1, column=1)
+# Buttons
+button = tk.Button(root, text="Berechnen", font=(
+    "Arial", 12), bg="#4CAF50", fg="white", command=rechne)
+button.grid(row=1, column=1, pady=10)
 
-# Label für Ergebnis
-label_ergebnis = tk.Label(root, text="Ergebnis:")
-label_ergebnis.grid(row=2, column=1)
+button_vz = tk.Button(root, text="± Vorzeichen", font=(
+    "Arial", 10), command=wechsle_vorzeichen)
+button_vz.grid(row=1, column=0)
 
-# Hauptloop starten
+# Ergebnis anzeigen
+label_ergebnis = tk.Label(root, text="Ergebnis:",
+                          font=("Arial", 14), bg="#f0f0f0")
+label_ergebnis.grid(row=2, column=0, columnspan=3)
+
+# App starten
 root.mainloop()
