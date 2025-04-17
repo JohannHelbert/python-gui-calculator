@@ -67,8 +67,18 @@ operator_menu.config(font=("Arial", 12))
 operator_menu.grid(row=0, column=1)
 
 # Buttons
-button = tk.Button(root, text="Berechnen", font=(
-    "Arial", 12), bg="#4CAF50", fg="white", command=rechne)
+button = tk.Button(
+    root,
+    text="Berechnen",
+    command=rechne,
+    bg="lightgray",       # Hintergrund
+    fg="black",           # Textfarbe
+    font=("Arial", 12),   # Schriftart
+    relief="raised",      # 3D-Effekt
+    padx=10,
+    pady=5
+)
+
 button.grid(row=1, column=1, pady=10)
 
 button_vz = tk.Button(root, text="± Vorzeichen", font=(
